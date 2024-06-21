@@ -1,8 +1,15 @@
 ﻿@model ToDoListWebApp.Models.User
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
-<p>Имя: @Model.Firstname</p>
-<p>Фамилия: @Model.Lastname</p>
-<p>Электронная почта: @Model.Email</p>
+@{
+    ViewBag.Title = @Localizer["Title"];
+    Layout = "_Layout";
+}
 
-<a asp-action="ChangePassword" class="btn btn-outline-primary">Изменить пароль</a>
-<a asp-action="GetProfileData" class="btn btn-outline-info">Прислать данные аккаунта на почту</a>
+<p>@Localizer["Firstname"]: @Model.Firstname</p>
+<p>@Localizer["Lastname"]: @Model.Lastname</p>
+<p>@Localizer["Email"]: @Model.Email</p>
+
+<a asp-action="ChangePassword" class="btn btn-outline-primary">@Localizer["ChangePassword"]</a>
+<a asp-action="GetProfileData" class="btn btn-outline-info">@Localizer["GetProfileData"]</a>
