@@ -29,7 +29,7 @@ builder.Services.Configure<GzipCompressionProviderOptions>(options =>
 
 
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
-
+builder.Services.AddEmail();
 // Add services to the container.
 builder.Services.AddControllersWithViews(options =>
 {
