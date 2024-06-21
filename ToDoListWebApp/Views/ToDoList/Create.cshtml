@@ -1,0 +1,34 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@model ToDoTask
+@{
+    ViewBag.Title = @Localizer["Title"];
+    Layout = "_Layout";
+}
+
+<div class="container-sm d-flex justify-content-center">
+    <div class="col-lg-5 bordered-form p-5 d-flex justify-content-center">
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        <form class="w-100 row p-0" asp-action="Create" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-row">
+                @Html.LabelFor(model => model.Title)
+                @Html.EditorFor(model => model.Title)
+                @Html.ValidationMessageFor(model => model.Title)
+            </div>
+            <div class="form-row">
+                @Html.LabelFor(model => model.Priority)
+                @Html.DropDownListFor(model => model.Priority, Html.GetEnumSelectList<ToDoTaskPriority>())
+                @Html.ValidationMessageFor(model => model.Priority)
+            </div>
+            <div class="form-row">
+                @Html.LabelFor(model => model.Description)
+                @Html.TextAreaFor(e => e.Description)
+                @Html.ValidationMessageFor(model => model.Description)
+            </div>
+            <button type="submit" class="button col-6 mx-auto">Создать</button>
+        </form>
+    </div>
+</div>

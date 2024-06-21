@@ -1,0 +1,83 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@model ToDoTask
+@{
+    ViewBag.Title = Localizer["Title", Model.Id];
+    Layout = "_Layout";
+}
+
+<div class="container">
+    <table>
+        <tr>
+            <td colspan="3">@Model.Title</td>
+        </tr>
+        <tr>
+            <td>@Localizer["Status"]</td>
+            <td>@Html.DisplayFor(x => x.Status)</td>
+            <td rowspan="6">
+                <p>@Localizer["Description"]</p>
+                <div>@Model.Description</div>
+            </td>
+        </tr>
+        <tr>
+            <td>@Localizer["Priority"]</td>
+            <td><p class="@Model.Priority.GetCssClass()">@Html.DisplayFor(x => x.Priority)</p></td>
+        </tr>
+        <tr>
+            <td>@Localizer["Id"]</td>
+            <td>@Html.DisplayFor(x => x.Id)</td>
+        </tr>
+        <tr>
+            @if(Model.Performer is not null)
+            {
+                <td>@Localizer["PerformerFullName"]</td>
+                <td>@Model.Performer.Firstname @Model.Performer.Lastname</td>
+            }
+            else
+            {
+                <td>@Localizer["CreatorName"]</td>
+                <td>@Model.Creator.Firstname @Model.Creator.Lastname</td>
+            }
+        </tr>
+        <tr>
+            @if(Model.DoneAt.HasValue)
+            {
+                <td>@Localizer["CloseDate"]</td>
+                <td>@Model.DoneAt.Value.ToString("dd.MM.yyyy hh:mm") UTC-0</td>
+            }
+            else
+            {
+                <td>@Localizer["CreationDate"]</td>
+                <td>@Model.CreatedAt.ToString("dd.MM.yyyy hh:mm") UTC-0</td>
+            }
+        </tr>
+        <tr>
+            <td colspan="2">
+                @if (Model.Status == ToDoTaskStatus.New)
+                {
+                    <a class="button" asp-action="SetInProgress" asp-route-id="@Model.Id" asp-route-redirectUrl="/ToDoList/Details/@Model.Id">@Localizer["Open"]</a>
+                }
+                @if (Model.Status == ToDoTaskStatus.InProgress)
+                {
+                    @if (ViewBag.UserId == Model.PerformerId.ToString() || User.IsInRole("admin"))
+                    {
+                        <a class="button" asp-action="SetDone" asp-route-id="@Model.Id" asp-route-redirectUrl="/ToDoList/Details/@Model.Id">@Localizer["Close"]</a>
+                    }
+                    else
+                    {
+                        <a class="theme-btn-d">@Localizer["Close"]</a>
+                    }
+                }
+                @if (ViewBag.UserId == Model.CreatorId.ToString() || User.IsInRole("admin"))
+                {
+                    <a class="button" asp-action="Delete" asp-route-id="@Model.Id">@Localizer["Delete"]</a>
+                }
+                else
+                {
+                    <a class="theme-btn-d">@Localizer["Delete"]</a>
+                }
+            </td>
+        </tr>
+    </table>
+</div>

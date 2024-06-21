@@ -1,0 +1,112 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@model ToDoListWebApp.ViewModels.IndexViewModel
+@{
+    ViewBag.Title = @Localizer["Title"];
+    Layout = "_Layout";
+}
+
+@functions{
+    string GetMaxDate() => DateTimeOffset.UtcNow.ToString("yyyy-MM-dd");
+}
+
+<div class="container">
+    <form class="row justify-content-between" asp-action="index" method="get">
+        <div class="col mx-2">
+            <div class="row">
+                @Html.DisplayNameFor(e => e.Title)
+                @Html.TextBoxFor(e => e.Title)
+            </div>
+            <div class="row">
+                @Html.DisplayNameFor(e => e.Description)
+                @Html.TextBoxFor(e => e.Description)
+            </div>
+        </div>
+        <div class="col mx-2">
+            <div class="row">
+                @Html.DisplayNameFor(e => e.CreationDateAfter)
+                <input asp-for="@Model.CreationDateAfter" type="date" max="@GetMaxDate()" />
+            </div>
+            <div class="row">
+                @Html.DisplayNameFor(e => e.CreationDateBefore)
+                <input asp-for="@Model.CreationDateBefore" type="date" max="@GetMaxDate()" />
+            </div>
+        </div>
+        <div class="col mx-2">
+            <div class="row">
+                @Html.DisplayNameFor(e => e.Priority)
+                @Html.DropDownListFor(e => e.Priority, Html.GetEnumSelectList<ToDoTaskPriority>(), Localizer["SelectPriority"])
+            </div>
+            <div class="row">
+                @Html.DisplayNameFor(e => e.Status)
+                @Html.DropDownListFor(e => e.Status, Html.GetEnumSelectList<ToDoTaskStatus>(), Localizer["SelectStatus"])
+            </div>
+        </div>
+        <div class="col mx-2">
+            <div class="row">
+                @Html.DisplayNameFor(e => e.TaskType)
+                @Html.DropDownListFor(e => e.TaskType, Html.GetEnumSelectList<ToDoTaskType>())
+            </div>
+            <div class="row mt-2">
+                <button type="submit" class="button mx-auto">@Localizer["Filter"]</button>
+            </div>
+
+        </div>
+    </form>
+    @if (@Model.ToDoList.Count == 0)
+    {
+        <p>@Localizer["Empty"]</p>
+    }
+    else
+    {
+        <div class="table_section">
+            <table>
+                <tr>
+                    <th><a asp-action="Index" asp-route-sortOrder="@ViewBag.IdSort">@Localizer["IdSort"]</a></th>
+                    <th><a asp-action="Index" asp-route-sortOrder="@ViewBag.TitleSort">@Localizer["TitleSort"]</a></th>
+                    <th><a asp-action="Index" asp-route-sortOrder="@ViewBag.PrioritySort">@Localizer["PrioritySort"]</a></th>
+                    <th><a asp-action="Index" asp-route-sortOrder="@ViewBag.StatusSort">@Localizer["StatusSort"]</a></th>
+                    <th><a asp-action="Index" asp-route-sortOrder="@ViewBag.CreationDateSort">@Localizer["CreationDateSort"]</a></th>
+                    <th>@Localizer["Actions"]</th>
+                </tr>
+                @foreach (var task in @Model.ToDoList)
+                {
+                    <tr>
+                        <td>@task.Id</td>
+                        <td>@task.Title</td>
+                        <td><p class="@task.Priority.GetCssClass()">@Html.DisplayFor(e => task.Priority)</p></td>
+                        <td>@Html.DisplayFor(e => task.Status)</td>
+                        <td>@task.CreatedAt.ToString("dd.MM.yyyy hh:mm") UTC-0</td>
+                        <td>
+                            @if (task.Status == ToDoTaskStatus.New)
+                            {
+                                <a class="button" asp-action="SetInProgress" asp-route-id="@task.Id">@Localizer["Open"]</a>
+                            }
+                            @if (task.Status == ToDoTaskStatus.InProgress)
+                            {
+                                @if (ViewBag.UserId == task.PerformerId.ToString() || User.IsInRole("admin"))
+                                {
+                                    <a class="button" asp-action="SetDone" asp-route-id="@task.Id">@Localizer["Close"]</a>
+                                }
+                                else
+                                {
+                                    <a class="theme-btn-d">@Localizer["Close"]</a>
+                                }
+                            }
+                            <a class="button" asp-action="Details" asp-route-id="@task.Id">@Localizer["Details"]</a>
+                            @if (ViewBag.UserId == task.CreatorId.ToString() || User.IsInRole("admin"))
+                            {
+                                <a class="button" asp-action="Delete" asp-route-id="@task.Id">@Localizer["Delete"]</a>
+                            }
+                            else
+                            {
+                                <a class="theme-btn-d">@Localizer["Delete"]</a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    }
+</div>

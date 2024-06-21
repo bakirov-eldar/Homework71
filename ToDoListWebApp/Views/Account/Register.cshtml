@@ -1,0 +1,52 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@model ToDoListWebApp.ViewModels.RegisterViewModel
+@{
+    ViewBag.Title = @Localizer["Title"];
+    Layout = "_Layout";
+}
+
+<h2 class="text-center">@Localizer["Title"]</h2>
+<div class="container-sm d-flex justify-content-center">
+    <div class="col-lg-5 bordered-form p-5 d-flex justify-content-center">
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        <form method="post" asp-controller="Account" asp-action="Register">
+            <div asp-validation-summary="ModelOnly"></div>
+            <div class="form-row">
+                <label asp-for="Firstname"></label>
+                <input asp-for="Firstname" />
+                <span asp-validation-for="Firstname"></span>
+            </div>
+            <div class="form-row">
+                <label asp-for="Lastname"></label>
+                <input asp-for="Lastname" />
+                <span asp-validation-for="Lastname"></span>
+            </div>
+            <div class="form-row">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" />
+                <span asp-validation-for="Email"></span>
+            </div>
+            <div class="form-row">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" />
+                <span asp-validation-for="Password"></span>
+            </div>
+            <div class="form-row">
+                <label asp-for="RepeatPassword"></label>
+                <input asp-for="RepeatPassword" />
+                <span asp-validation-for="RepeatPassword"></span>
+            </div>
+            <div class="form-row">
+                <input type="submit" value="@Localizer["SignUp"]" />
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

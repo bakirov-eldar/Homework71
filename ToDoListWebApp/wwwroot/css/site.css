@@ -1,0 +1,131 @@
+body {
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+}
+
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+label {
+    display: block;
+    font-weight: 500;
+    color: black;
+}
+
+input {
+    width: 100%;
+    display: block;
+    border: solid 3px #000000;
+}
+select {
+    width: 45%;
+    border: solid 3px #000000;
+}
+
+
+textarea {
+    border: solid 3px #000000;
+    display: block;
+    resize: none;
+    width: 100%;
+    height: 10vw;
+}
+
+.bordered-form {
+    border: solid 3px #000000;
+}
+
+.form-row {
+    width: 100%;
+    padding: 0px;
+    margin-bottom: 1vw;
+}
+
+.field-validation-error{
+    color: #FF4444;
+}
+
+.button {
+    font-weight: 500;
+    font-size: 16px;
+    color: black;
+    background-color: white;
+    border: 3px solid black;
+    padding: 5px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    box-shadow: 3px 3px 0px 0px black;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.button:hover {
+    box-shadow: 0px 0px 0px 0px black;
+}
+
+.button:hover {
+    color: black;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table
+table > tbody > tr > th,
+table > tbody > tr > td {
+    border: 3px solid black;
+    padding: 8px;
+}
+
+.priority-high{
+    color: #CC0000;
+}
+
+.priority-medium{
+    color: #0000CC;
+}
+
+.priority-low {
+    color: #00CC00;
+}
+
+.theme-btn-d {
+    font-weight: 500;
+    font-size: 16px;
+    color: #404040;
+    background-color: #808080;
+    border: 3px solid #404040;
+    padding: 5px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    pointer-events: none;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.theme-btn-d:hover {
+    color: #404040;
+}
