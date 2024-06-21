@@ -132,4 +132,7 @@
   <data name="ToDoList" xml:space="preserve">
     <value>Список задач</value>
   </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Личный кабинет</value>
+  </data>
 </root>

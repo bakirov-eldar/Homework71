@@ -67,7 +67,7 @@ public class ToDoTaskService
     {
         int n = await db.ToDoList.Where(e => e.Id == id).ExecuteDeleteAsync();
         await db.SaveChangesAsync();
-        if(n > 0)
+        if (n > 0)
         {
             cache.Remove(id);
         }

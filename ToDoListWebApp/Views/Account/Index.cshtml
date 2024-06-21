@@ -1,0 +1,8 @@
+﻿@model ToDoListWebApp.Models.User
+
+<p>Имя: @Model.Firstname</p>
+<p>Фамилия: @Model.Lastname</p>
+<p>Электронная почта: @Model.Email</p>
+
+<a asp-action="ChangePassword" class="btn btn-outline-primary">Изменить пароль</a>
+<a asp-action="GetProfileData" class="btn btn-outline-info">Прислать данные аккаунта на почту</a>

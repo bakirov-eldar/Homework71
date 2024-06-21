@@ -132,4 +132,7 @@
   <data name="ToDoList" xml:space="preserve">
     <value>To-do list</value>
   </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Profile</value>
+  </data>
 </root>

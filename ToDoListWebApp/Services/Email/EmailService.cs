@@ -19,7 +19,7 @@ public class EmailService
         message.From.Add(new MimeKit.MailboxAddress(options.FromName, options.EmailAddress));
         message.To.Add(new MimeKit.MailboxAddress("", to));
         message.Subject = subject;
-        message.Body = new MimeKit.TextPart("plain")
+        message.Body = new MimeKit.TextPart("html")
         {
             Text = text
         };
